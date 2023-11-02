@@ -1,8 +1,7 @@
 package com.example.spaceapp.domain
 
-import com.example.spaceapp.data.network.response.PredictionResponse
-import com.example.spaceapp.domain.model.PredictionModel
+import com.example.spaceapp.domain.model.PictureModel
 
 interface Repository {
-    suspend fun getPrediction(date:String, apiKey:String): PredictionModel?
+    suspend fun getPrediction(date:String, apiKey:String): PictureModel?
 }

@@ -2,7 +2,7 @@ package com.example.spaceapp.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.spaceapp.domain.usecase.GetPredictionUseCase
+import com.example.spaceapp.domain.usecase.GetPictureUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val getPredictionUseCase: GetPredictionUseCase) : ViewModel() {
+class MainViewModel @Inject constructor(private val getPredictionUseCase: GetPictureUseCase) : ViewModel() {
 
     private var _state = MutableStateFlow<MainState>(MainState.Loading)
     val state:StateFlow<MainState> = _state

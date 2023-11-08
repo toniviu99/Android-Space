@@ -1,8 +1,8 @@
 package com.example.spaceapp.ui.home.adapter
 
 import android.animation.ObjectAnimator
-import android.util.Log
 import android.view.View
+import android.view.animation.LinearInterpolator
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spaceapp.databinding.ItemPictureBinding
 import com.example.spaceapp.domain.model.PictureModelItem
@@ -15,7 +15,7 @@ class PictureViewHolder(view: View):RecyclerView.ViewHolder(view) {
     private val binding = ItemPictureBinding.bind(view)
     private var minimized = true
 
-    fun render(pictureModelItem: PictureModelItem){
+    fun render(pictureModelItem: PictureModelItem, onItemSelected: (PictureModelItem) -> Unit){
         binding.tvTitle.text = pictureModelItem.title
         binding.tvCopyright.text = pictureModelItem.copyright
 
@@ -26,6 +26,9 @@ class PictureViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
         Picasso.get().load(pictureModelItem.imageUrl).into(binding.ivPicture)
         arrowListener()
+        binding.btnMoreInfo.setOnClickListener {
+            startRotationAnimation(binding.ivVia, newLambda = {onItemSelected(pictureModelItem)})
+        }
 
     }
 
@@ -35,7 +38,7 @@ class PictureViewHolder(view: View):RecyclerView.ViewHolder(view) {
         binding.lyInfo.layoutParams = params
         binding.lyInfo.translationY = -300f
 
-        binding.ivArrow.setOnClickListener {
+        binding.lybanner.setOnClickListener {
             if (minimized){
                 ObjectAnimator.ofFloat(binding.lyInfo,"translationY", 0f).apply {
                     duration = 150
@@ -52,6 +55,17 @@ class PictureViewHolder(view: View):RecyclerView.ViewHolder(view) {
                 binding.ivArrow.rotation = 0f
                 minimized = true
             }
+        }
+    }
+    private fun startRotationAnimation(view:View, newLambda:()->Unit){
+        view.animate().apply{
+            duration = 500
+            interpolator = LinearInterpolator()
+            rotationBy(360f)
+            withEndAction{
+                newLambda()
+            }
+            start()
         }
     }
 }

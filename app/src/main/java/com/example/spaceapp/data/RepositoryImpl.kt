@@ -7,7 +7,7 @@ import com.example.spaceapp.domain.model.PictureModel
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val apiService: PictureApiService): Repository {
-    override suspend fun getPrediction(date: String, apiKey: String):PictureModel? {
+    override suspend fun getPicture(date: String, apiKey: String):PictureModel? {
         runCatching { apiService.getPicture(date,apiKey) }
             .onSuccess {
                 return it.toDomain()

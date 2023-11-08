@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spaceapp.databinding.ActivityMainBinding
 import com.example.spaceapp.ui.home.adapter.PictureAdapter
@@ -38,7 +39,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        adapter = PictureAdapter()
+        adapter = PictureAdapter(onItemSelected = {
+            Toast.makeText(this,it.title.toString() , Toast.LENGTH_LONG).show()
+//            findNavController().navigate(
+//
+//            )
+        })
         binding.rvPictures.layoutManager = LinearLayoutManager(this)
         binding.rvPictures.adapter = adapter
     }
@@ -76,7 +82,6 @@ class MainActivity : AppCompatActivity() {
     private fun successState(state: MainState.Success) {
         binding.pb.isVisible = false
         adapter.updateList(state.predictionModel.info)
-        Toast.makeText(this,"success",Toast.LENGTH_LONG).show()
         Log.d("toni",state.toString())
     }
 

@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spaceapp.R
 import com.example.spaceapp.domain.model.PictureModelItem
 
-class PictureAdapter(private var pictureList: List<PictureModelItem> = emptyList()): RecyclerView.Adapter<PictureViewHolder>() {
+class PictureAdapter(private var pictureList: List<PictureModelItem> = emptyList(),
+    private val onItemSelected:(PictureModelItem) ->Unit):
+    RecyclerView.Adapter<PictureViewHolder>() {
 
     fun updateList(list: List<PictureModelItem>){
         pictureList = list
@@ -24,6 +26,6 @@ class PictureAdapter(private var pictureList: List<PictureModelItem> = emptyList
     }
 
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
-        holder.render(pictureList[position])
+        holder.render(pictureList[position], onItemSelected)
     }
 }
